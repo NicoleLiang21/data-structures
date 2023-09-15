@@ -28,8 +28,8 @@ public class ListDemo
         iterator.next();  // T | N, P, G
 
         /* next() method also returns element the iterator passed over */
-        String avenger = iterator.next();  // T, N | P, G
-        System.out.println(avenger);  // Prints out Natasha 
+        String avengers = iterator.next();  // T, N | P, G
+        System.out.println(avengers);  // Prints out Natasha 
 
         /* add() method inserts an element at the iteratore position
          * Iterator is then positioned after the element that was added
@@ -54,7 +54,43 @@ public class ListDemo
         /* hasNext() method is used to determine if there is a next node in the iterator 
          * Often used in the condition of a while loop
         */
+        iterator = staff.listIterator();  // | T, N, B, S, G
         
+        while(iterator.hasNext())
+        {
+            String n = iterator.next();
+            if (n.equals("Natasha"))  // T, N | B, S, G
+                iterator.remove();  // T | B, S, G
+        }  // T, B, S, G |
+
+        /* Enhanced for loops work with linked lists */
+        for (String n: staff)
+        {
+            System.out.print(n + " ");
+        }
+        System.out.println("\nExpected: Tony Bruce Scott Gamora");
+
+        /* 
+         * ConcurrentModification Exception
+         * CANNOT modify a linked list whilee also using an iterator UNLESS you use the iterator to do so
+         */
+        iterator = staff.listIterator();
+        while(iterator.hasNext())
+        {
+            String n = iterator.next();
+            //if (n.equals("Scott"))
+            //    staff.remove("Scott");
+        }
+
+        /* 
+         * ConcurrentModification Exception
+         * Enhanced for loop automatically creates an iterator
+         */
+         for (String n: staff)
+         {
+            if (n.equals("Scott"))
+                staff.add("Rocket");
+         }
 
     }
 }
