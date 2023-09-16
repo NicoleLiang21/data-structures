@@ -72,7 +72,7 @@ public class ListDemo
 
         /* 
          * ConcurrentModification Exception
-         * CANNOT modify a linked list whilee also using an iterator UNLESS you use the iterator to do so
+         * CANNOT modify a linked list while also using an iterator UNLESS you use the iterator to do so
          */
         iterator = staff.listIterator();
         while(iterator.hasNext())
