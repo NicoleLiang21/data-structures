@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class SudokuSolver {
     private final int M = 3;
@@ -38,25 +41,66 @@ public class SudokuSolver {
         // create the list of sets for each row (this.rows)
         this.rows = new ArrayList<Set<Integer>>();
         
-        for (int i = 0; i < this.grid.length; i++)
+        for (int i = 0; i < N; i++)
         {
-            //this.rows.add(i, grid[i][i]);
+            Set<Integer> row = new HashSet<Integer>();
+
+            for(int j = 0; j < N; j++)
+                row.add(grid[i][j]);
+            
+            this.rows.add(row);
         }
         
 
         // create the list of sets for each col (this.cols)
         this.cols = new ArrayList<Set<Integer>>();
 
-        // create the list of sets for each square (this.squares)
-        /* the squares are added to the list row-by-row:
+        for (int i = 0; i < N; i++)
+        {
+            Set<Integer> col = new HashSet<Integer>();
+
+            for (int j = 0; j < N; j++)
+                col.add(grid[j][i]);
+
+            this.cols.add(col);
+        }
+
+        /* create the list of sets for each square (this.squares)
+           the squares are added to the list row-by-row:
             0 1 2
             3 4 5
             6 7 8
-         */
-        // ...
+        */
+
+        int countr = 0, countc = 0;
+        // 9 squares total
+        for (int num = 0; num < 9; num++)
+        {
+            Set<Integer> square = new HashSet<>();
+
+            // each square is 3x3
+            for (int i = countr; i < countr + 3; i++)
+            {
+                Set<Integer> row = this.rows.get(i);
+                for (int j = countc; j < countc + 3; j++)
+                {
+                    row.get(j);
+                }
+            }
+
+            // determine where the next starting location (upper left corner of the square) is
+            countc += 3;
+            countr = 0;
+            if(countc > 8)
+                countr += 3;
+        }
+
+        
 
         // create a hash set for [1..9] (this.nums)
-        // ...
+        this.nums = new HashSet<Integer>();
+        for (int i = 1; i < 10; i++)
+            this.nums.add(i);
 
         // visually inspect that all the sets are correct
         for (int row = 0; row < N; row++) {
