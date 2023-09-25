@@ -84,9 +84,11 @@ public class SudokuSolver {
                 Set<Integer> row = this.rows.get(i);
                 for (int j = countc; j < countc + 3; j++)
                 {
-                    row.get(j);
+                    square.add(grid[i][j]);
                 }
             }
+
+            this.squares.add(square);
 
             // determine where the next starting location (upper left corner of the square) is
             countc += 3;
@@ -147,7 +149,16 @@ public class SudokuSolver {
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
         
-        // ...
+        int count = 0;
+        for (Integer num : possibleNums)
+        {
+            if (this.rows.get(count).contains(num) ||
+                this.cols.get(count).contains(num) ||
+                this.squares.get(count / 3).contains(num)) // fix this later im tired rn
+                possibleNums.remove(num);
+            
+            count++;
+        }
 
         // if there are no possible numbers, we cannot solve the board in its current state
         if (possibleNums.isEmpty()) {
