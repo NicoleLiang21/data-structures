@@ -148,16 +148,14 @@ public class SudokuSolver {
          */
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
-        
-        int count = 0;
+        int nextSquare = (nextRow - nextRow % N) + nextCol/N;
+
         for (Integer num : possibleNums)
         {
-            if (this.rows.get(count).contains(num) ||
-                this.cols.get(count).contains(num) ||
-                this.squares.get(count / 3).contains(num)) // fix this later im tired rn
+            if (this.rows.get(nextRow).contains(num) ||
+                this.cols.get(nextCol).contains(num) ||
+                this.squares.get(nextSquare).contains(num)) 
                 possibleNums.remove(num);
-            
-            count++;
         }
 
         // if there are no possible numbers, we cannot solve the board in its current state
@@ -168,7 +166,10 @@ public class SudokuSolver {
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
-            // ...
+            this.rows.get(nextRow).add(possibleNum);
+            this.cols.get(nextCol).add(possibleNum);
+            this.squares.get(nextSquare).add(possibleNum);
+            grid[nextRow][nextCol] = possibleNum;
 
             // recursively solve the board
             if (this.solve()) {
@@ -202,7 +203,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-        String fileName = "src/puzzle1.txt";
+        String fileName = "Chapter 15 Activities/Sudoku/src/puzzle1.txt";
 
         SudokuSolver solver = new SudokuSolver(fileName);
         System.out.println(solver);
