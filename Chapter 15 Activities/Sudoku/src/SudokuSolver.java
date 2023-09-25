@@ -78,16 +78,14 @@ public class SudokuSolver {
         {
             Set<Integer> square = new HashSet<>();
 
-            // each square is 3x3
-            for (int i = countr; i < countr + 3; i++)
+            // each square is MxM
+            for (int i = countr; i < countr + M; i++)
             {
-                Set<Integer> row = this.rows.get(i);
-                for (int j = countc; j < countc + 3; j++)
+                for (int j = countc; j < countc + M; j++)
                 {
                     square.add(grid[i][j]);
                 }
             }
-
             this.squares.add(square);
 
             // determine where the next starting location (upper left corner of the square) is
@@ -148,13 +146,13 @@ public class SudokuSolver {
          */
         Set<Integer> possibleNums = new HashSet<Integer>();
         possibleNums.addAll(this.nums);
-        int nextSquare = (nextRow - nextRow % N) + nextCol/N;
+        int nextSquare = (nextRow - nextRow % M) + nextCol/M;
 
         for (Integer num : possibleNums)
         {
             if (this.rows.get(nextRow).contains(num) ||
                 this.cols.get(nextCol).contains(num) ||
-                this.squares.get(nextSquare).contains(num)) 
+                this.squares.get(nextSquare).contains(num))
                 possibleNums.remove(num);
         }
 
@@ -166,10 +164,16 @@ public class SudokuSolver {
         // try each possible number
         for (Integer possibleNum : possibleNums) {
             // update the grid and all three corresponding sets with possibleNum
-            this.rows.get(nextRow).add(possibleNum);
-            this.cols.get(nextCol).add(possibleNum);
-            this.squares.get(nextSquare).add(possibleNum);
             grid[nextRow][nextCol] = possibleNum;
+
+            this.rows.get(nextRow).remove(0);
+            this.rows.get(nextRow).add(possibleNum);
+
+            this.rows.get(nextCol).remove(0);
+            this.rows.get(nextCol).add(possibleNum);
+
+            this.rows.get(nextSquare).remove(0);
+            this.rows.get(nextSquare).add(possibleNum);
 
             // recursively solve the board
             if (this.solve()) {
@@ -181,7 +185,16 @@ public class SudokuSolver {
                  element in the grid back to 0 and removing possibleNum from all three corresponding
                  sets.
                  */
-                // ...
+                grid[nextRow][nextCol] = 0;
+
+                this.rows.get(nextRow).remove(possibleNum);
+                this.rows.get(nextRow).add(0);
+
+                this.rows.get(nextCol).remove(possibleNum);
+                this.rows.get(nextCol).add(0);
+
+                this.rows.get(nextSquare).remove(possibleNum);
+                this.rows.get(nextSquare).add(0);
             }
         }
 
