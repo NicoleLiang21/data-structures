@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -71,31 +72,28 @@ public class SudokuSolver {
             3 4 5
             6 7 8
         */
-
+        this.squares = new ArrayList<Set<Integer>>();
         int countr = 0, countc = 0;
+
         // 9 squares total
-        for (int num = 0; num < 9; num++)
+        for (int num = 0; num < N; num++)
         {
+            countr = num/3 * 3;
             Set<Integer> square = new HashSet<>();
 
             // each square is MxM
             for (int i = countr; i < countr + M; i++)
-            {
                 for (int j = countc; j < countc + M; j++)
-                {
                     square.add(grid[i][j]);
-                }
-            }
+                
             this.squares.add(square);
 
             // determine where the next starting location (upper left corner of the square) is
             countc += 3;
-            countr = 0;
-            if(countc > 8)
-                countr += 3;
-        }
 
-        
+            if (countc > 8)
+                countc = 0;
+        }
 
         // create a hash set for [1..9] (this.nums)
         this.nums = new HashSet<Integer>();
@@ -148,12 +146,22 @@ public class SudokuSolver {
         possibleNums.addAll(this.nums);
         int nextSquare = (nextRow - nextRow % M) + nextCol/M;
 
-        for (Integer num : possibleNums)
+        Iterator<Integer> iter = possibleNums.iterator();
+        Set<Integer> row = this.rows.get(nextRow);
+        Set<Integer> col = this.cols.get(nextCol);
+        Set<Integer> square = this.squares.get(nextSquare);
+
+
+        while(iter.hasNext())
         {
+            Integer num = iter.next();
+
             if (this.rows.get(nextRow).contains(num) ||
                 this.cols.get(nextCol).contains(num) ||
                 this.squares.get(nextSquare).contains(num))
-                possibleNums.remove(num);
+            {
+                iter.remove();
+            }
         }
 
         // if there are no possible numbers, we cannot solve the board in its current state
@@ -166,14 +174,9 @@ public class SudokuSolver {
             // update the grid and all three corresponding sets with possibleNum
             grid[nextRow][nextCol] = possibleNum;
 
-            this.rows.get(nextRow).remove(0);
-            this.rows.get(nextRow).add(possibleNum);
-
-            this.rows.get(nextCol).remove(0);
-            this.rows.get(nextCol).add(possibleNum);
-
-            this.rows.get(nextSquare).remove(0);
-            this.rows.get(nextSquare).add(possibleNum);
+            row.add(possibleNum);
+            col.add(possibleNum);
+            square.add(possibleNum);
 
             // recursively solve the board
             if (this.solve()) {
@@ -187,14 +190,9 @@ public class SudokuSolver {
                  */
                 grid[nextRow][nextCol] = 0;
 
-                this.rows.get(nextRow).remove(possibleNum);
-                this.rows.get(nextRow).add(0);
-
-                this.rows.get(nextCol).remove(possibleNum);
-                this.rows.get(nextCol).add(0);
-
-                this.rows.get(nextSquare).remove(possibleNum);
-                this.rows.get(nextSquare).add(0);
+                row.remove(possibleNum);
+                col.remove(possibleNum);
+                square.remove(possibleNum);
             }
         }
 
