@@ -28,7 +28,11 @@ public class StringLengthMap
                 // Update the map here
                 // Modify Worked Example 15.1
                 String current = words.get(len);
-                words.put(len, current + ", " + word);
+
+                if (current == "")
+                    words.put(len, word);
+                else
+                    words.put(len, current + ", " + word);
 
             }
 
