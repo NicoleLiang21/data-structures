@@ -1,8 +1,6 @@
-import java.util.Scanner;
-import java.awt.Color;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -59,7 +57,7 @@ public class Gradebook
                 Set<String> keys = students.keySet();
                 for (String key : keys)
                 {
-                    System.out.println(key + " (" + key.hashCode() + "):" + students.get(key));
+                    System.out.println(key + " (" + key.hashCode() + "): " + students.get(key));
                 }
 
             } else
