@@ -1,5 +1,9 @@
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeMap;
 /**
  * Read all words from a file and add them to a
  * map whose keys are word lengths and whose values
@@ -14,11 +18,11 @@ public class StringLengthMap
     {
         String filename = "Chapter 15 Activities/StringLengthMap/src/test1.txt";
 
-        // Create your map here
-        Map<Integer, String> words = new TreeMap<>();
-
         try (Scanner in = new Scanner(new File(filename)))
         {
+
+            // Create your map here
+            Map<Integer, String> words = new TreeMap<>();
 
             while (in.hasNext())
             {
@@ -29,7 +33,7 @@ public class StringLengthMap
                 // Modify Worked Example 15.1
                 String current = words.get(len);
 
-                if (current == "")
+                if (current == null)
                     words.put(len, word);
                 else
                     words.put(len, current + ", " + word);
@@ -40,8 +44,7 @@ public class StringLengthMap
             // Use this format: 1: i, a, i
             Set<Integer> wordSet = words.keySet();
             for (Integer i : wordSet)
-                // have to cut the strings since "null" is always first element from initialization
-                System.out.println(i + ": " + words.get(i).substring(6));
+                System.out.println(i + ": " + words.get(i));
 
 
         } catch (FileNotFoundException e)
