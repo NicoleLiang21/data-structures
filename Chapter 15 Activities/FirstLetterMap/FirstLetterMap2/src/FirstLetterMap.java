@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class FirstLetterMap
         {
 
             // Create your map here
-            Map<Character, String> words = new TreeMap<>();
+            Map<Character, HashSet> words = new TreeMap<>();
 
             while (in.hasNext())
             {
@@ -32,20 +33,24 @@ public class FirstLetterMap
 
                 // Update the map here
                 // Modify Worked Example 15.1
-                String current = words.get(c);
+                HashSet<String> current = words.get(c);
+                HashSet<String> newSet = new HashSet<>();
+                newSet.add(word);
 
                 if (current == null)
-                    words.put(c, word);
+                    words.put(c, newSet);
                 else
-                    words.put(c, words.get(c) + ", " + word);
-
+                {
+                    current.add(word);
+                    words.put(c, current);
+                }
             }
 
             // Print the map here in this form
             // a: [a, able, aardvark]
             Set<Character> wordKeys = words.keySet();
             for (Character letter : wordKeys)
-                System.out.println(letter + ": [" + words.get(letter) + "]");
+                System.out.println(letter + ": " + words.get(letter));
             
 
         } catch (FileNotFoundException e)

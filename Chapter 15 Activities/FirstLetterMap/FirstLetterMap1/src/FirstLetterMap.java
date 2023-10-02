@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -23,16 +24,19 @@ public class FirstLetterMap
         {
 
             // Create your map here
-            Map<Character, String> words = new TreeMap<>();
+            Map<Character, HashSet> words = new TreeMap<>();
 
             while (in.hasNext())
             {
                 String word = clean(in.next());
                 Character c = word.charAt(0);
 
+                Set<String> set = new HashSet<>();
+                set.add(word);
+
                 // Update the map here
                 // Use the Java 8 merge method
-                words.merge(c, word, (oldval, newval) -> words.get(c) + ", " + word);
+                words.merge(c, set, (oldval, newval) -> words.get(c).add(word));
 
             }
 
