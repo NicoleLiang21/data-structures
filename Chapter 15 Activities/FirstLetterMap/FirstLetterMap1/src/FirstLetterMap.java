@@ -31,25 +31,35 @@ public class FirstLetterMap
                 String word = clean(in.next());
                 Character c = word.charAt(0);
 
-                Set<String> set = new HashSet<>();
-                set.add(word);
-
                 // Update the map here
                 // Use the Java 8 merge method
-                words.merge(c, set, (oldval, newval) -> words.get(c).add(word));
+                HashSet<String> set = new HashSet<>();
+                set.add(word);
 
+                //words.merge(c, set, (oldValue, newValue) -> words.put(c, set));
+                words.merge(c, set, (oldval, newval) -> add(words.get(c), word));
             }
 
             // Print the map here in this form
-            // a: [a, able, aardvark]
+            //  a: [a, able, aardvark]
             Set<Character> wordKeys = words.keySet();
             for (Character letter : wordKeys)
-                System.out.println(letter + ": [" + words.get(letter) + "]");
+                System.out.println(letter + ": " + words.get(letter));
 
         } catch (FileNotFoundException e)
         {
             System.out.println("Cannot open: " + filename);
         }
+    }
+
+    /*
+     * Quite honestly if we absolutely insit on using .merge()
+     * this is was the best way I could come up with
+     */
+    public static HashSet add(HashSet set, String word)
+    {
+        set.add(word);
+        return set;
     }
 
     public static String clean(String s)
