@@ -37,7 +37,11 @@ public class FirstLetterMap
                 set.add(word);
 
                 //words.merge(c, set, (oldValue, newValue) -> words.put(c, set));
-                words.merge(c, set, (oldval, newval) -> add(words.get(c), word));
+                words.merge(c, set, (oldval, newval) -> 
+                {   
+                    oldval.add(word);
+                    return oldval;
+                });
             }
 
             // Print the map here in this form
@@ -50,16 +54,6 @@ public class FirstLetterMap
         {
             System.out.println("Cannot open: " + filename);
         }
-    }
-
-    /*
-     * Quite honestly if we absolutely insit on using .merge()
-     * this is was the best way I could come up with
-     */
-    public static HashSet add(HashSet set, String word)
-    {
-        set.add(word);
-        return set;
     }
 
     public static String clean(String s)
