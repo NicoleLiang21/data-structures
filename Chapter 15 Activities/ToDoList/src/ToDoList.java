@@ -1,4 +1,5 @@
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Scanner;
 /**
  * Implement a to do list. Tasks have a priority between 
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class ToDoList
 {
     // Instance variable(s)
-    . . .
+    Queue<Task> todo;
 
     /**
      * Constructor
@@ -20,7 +21,7 @@ public class ToDoList
     public ToDoList()
     {
         // Complete this
-        . . .
+        todo = new PriorityQueue<>();
     }
 
     /**
@@ -60,9 +61,12 @@ public class ToDoList
     public void addTask(String optionStr)
     {
         // Complete this method
-        . . .
-            
-            
+        
+        optionStr = optionStr.substring(4);
+        if (optionStr.charAt(0) > 9)
+            System.out.println("Expected: The priority must be an integer between 1 and 9.");
+        else
+            todo.add(new Task(Integer.parseInt(optionStr.substring(0,1)),optionStr.substring(2)));
     }
 
     /**
@@ -74,7 +78,8 @@ public class ToDoList
         Task next = null;
         
         // Complete this method
-        . . .
+        if(todo.size() != 0)
+            next = todo.remove();
         
         
         if (next == null)
