@@ -63,8 +63,8 @@ public class ToDoList
         // Complete this method
         
         optionStr = optionStr.substring(4);
-        if (optionStr.charAt(0) > 9)
-            System.out.println("Expected: The priority must be an integer between 1 and 9.");
+        if (!Character.isDigit(optionStr.charAt(0)))
+            System.out.println("The priority must be an integer between 1 and 9.");
         else
             todo.add(new Task(Integer.parseInt(optionStr.substring(0,1)),optionStr.substring(2)));
     }
