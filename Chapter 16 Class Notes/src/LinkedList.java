@@ -8,40 +8,58 @@ import java.util.NoSuchElementException;
 */
 public class LinkedList
 {
-
+    /*
+     * first - refers to the first Node in the list
+     * If the list is empty, first will be null
+     */
+    private Node first;
 
     /**
         Constructs an empty linked list.
     */
-
-
-
+    public LinkedList()
+    {
+         this.first = null;
+    }
 
     /**
         Returns the first element in the linked list.
         @return the first element in the linked list
     */
+    public Object getFirst()
+    {
+        if (this.first == null)
+            throw new NoSuchElementException();
 
-
-
+        return this.first.data;
+    }
 
     /**
         Removes the first element in the linked list.
         @return the removed element
     */
+    public Object removeFirst()
+    {        
+        if (this.first == null)
+            throw new NoSuchElementException();
+        
+        Object element = this.first.data;
+        this.first = this.first.next;
 
-
-
-
+        return element;   
+    }
 
     /**
         Adds an element to the front of the linked list.
         @param element the element to add
     */
-
-
-
-
+    public void addFirst(Object element)
+    {
+        Node newNode = new Node();
+        newNode.data = element;
+        newNode.next = this.first;
+        this.first = newNode;
+    }
 
     /**
         Returns an iterator for iterating through this list.
@@ -49,31 +67,41 @@ public class LinkedList
     */
 
 
-
-
-
     //Class Node
+    // static since it doesn't have to access anything in a Linked List
+    static class Node
+    {
+        public Object data;
+        public Node next;
+    }
 
 
     class LinkedListIterator //implements ListIterator
     {
-      //private data
-
+        // private data
+        private Node position;
+        private Node previous;
+        private boolean isAfterNext;
 
         /**
             Constructs an iterator that points to the front
             of the linked list.
         */
-
+        public LinkedListIterator()
+        {
+            position = null;
+            previous = null;
+            isAfterNext = false;
+        }
 
         /**
             Moves the iterator past the next element.
             @return the traversed element
         */
-
-
-
-
+        public Object move()
+        {
+            return null;
+        }
 
         /**
             Tests if there is an element after the iterator position.
@@ -107,7 +135,6 @@ public class LinkedList
             Sets the last traversed element to a different value.
             @param element the element to set
         */
-
 
 
 
