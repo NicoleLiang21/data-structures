@@ -21,11 +21,45 @@ public class LinkedList
     /**
         Computes the size of the linked list.
         @return the number of elements in the list
-    */
+      
     public int size()
     {
-        . . .
+        Node node = first;
+        int size;
+
+        // Check if list is empty
+        if (node == null)
+            size = 0;
+        else
+        {
+            size = 1;
+            while (node.next != null)
+            {
+                size++;
+                node = node.next;
+            }
+        }
+        return size;
+    }*/
+
+    /** 
+     * Recursive version & helper method
+     */
+    public int size()
+    {
+        Node node = first;
+        int count = 0;
+        return sizeHelper(node, count);
     }
+
+    public int sizeHelper(Node node, int count)
+    {
+        if (node.next != null)
+            count = sizeHelper(node.next, count++);
+
+        return count;
+    }
+
 
     /**
         Returns the first element in the linked list.
