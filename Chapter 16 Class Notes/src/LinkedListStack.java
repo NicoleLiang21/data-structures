@@ -62,7 +62,7 @@ public class LinkedListStack
     */
     public boolean empty()
     {
-        return this.first.data == null;
+        return this.first == null;
     }
 
 
