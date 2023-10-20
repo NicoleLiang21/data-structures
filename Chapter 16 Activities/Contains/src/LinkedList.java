@@ -65,7 +65,7 @@ public class LinkedList
 
     public boolean containsHelper(Node node, Object obj)
     {
-        if (node != null)
+        if (node != null && obj != null)
         {
             if (obj.equals(node.data))
                 return true;
