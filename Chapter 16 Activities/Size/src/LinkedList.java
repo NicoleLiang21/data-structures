@@ -39,7 +39,20 @@ public class LinkedList
     // .size() recursive version & helper method
     public int size()
     {
-        . . .
+        Node node = first;
+        int size = 0;
+
+        return sizeHelper(node, size);
+    }
+
+    public int sizeHelper(Node node, int size)
+    {
+        if (node != null)
+        {
+            size = sizeHelper(node.next, ++size);
+        }
+
+        return size;
     }
 
 
