@@ -5,12 +5,18 @@ public class BinaryTree
 {
     private Node root;
 
+    static class Node
+    {
+        public Object data;
+        public Node left, right;
+    }
+
     /**
         Constructs an empty tree.
     */
     public BinaryTree()
     {
-         
+        this.root = null;
     } 
 
     /**
@@ -19,7 +25,7 @@ public class BinaryTree
     */
     public BinaryTree(Object rootData) 
     {
-        
+        this.root.data = rootData;
     }
 
     /**
@@ -30,13 +36,11 @@ public class BinaryTree
     */
     public BinaryTree(Object rootData, BinaryTree left, BinaryTree right)
     {
-        
+        this(rootData);
+        this.root.left = left.root;
+        this.root.right= right.root;
     }
-    
-    static class Node
-    {
-        
-    }
+
 
     /**
         Returns the height of the subtree whose root is the given node.
@@ -45,7 +49,10 @@ public class BinaryTree
     */
     private static int height(Node n)
     {
-        return 0;
+        if (n == null)
+            return 0;
+        else
+            return 1 + Math.max(BinaryTree.height(n.left), BinaryTree.height(n.right));
     }
 
     /**
@@ -54,7 +61,7 @@ public class BinaryTree
     */
     public int height()
     {
-        return 0;
+        return BinaryTree.height(this.root);
     }
 
     /**
@@ -63,7 +70,7 @@ public class BinaryTree
     */
     public boolean isEmpty()
     {
-         return false;
+         return this.root == null;
     }
 
     /**
@@ -72,7 +79,7 @@ public class BinaryTree
     */
     public Object data()
     {
-         return null;
+        return this.root.data;
     }
     
     /**
@@ -81,7 +88,9 @@ public class BinaryTree
     */
     public BinaryTree left() 
     { 
-        return null;
+        BinaryTree subtree = new BinaryTree();
+        subtree.root = this.root.left;
+        return subtree;
     }
 
     /**
@@ -90,6 +99,8 @@ public class BinaryTree
     */
     public BinaryTree right() 
     { 
-        return null;
+        BinaryTree subtree = new BinaryTree();
+        subtree.root = this.root.right;
+        return subtree;
     }
 }
