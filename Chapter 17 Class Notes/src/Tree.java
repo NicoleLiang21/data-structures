@@ -7,9 +7,13 @@ import java.util.ArrayList;
 public class Tree
 {
     
+    private Node root;
+
+
     static class Node
     {
-        
+        public Object data;
+        public List<Node> children;
 
         /**
             Computes the size of the subtree whose root is this node.
@@ -17,9 +21,14 @@ public class Tree
         */
         public int size()
         {
-            return 0;
+            int sum = 1;
+            for (Node child : this.children)
+                sum += child.size();
+
+            return sum;
         }
     }
+
 
     /**
         Constructs a tree with one node and no children.
@@ -27,16 +36,20 @@ public class Tree
     */
     public Tree(Object rootData)
     {
-        
+        this.root = new Node();
+        this.root.data = rootData;
+        this.root.children = new ArrayList<>();
     }
+
 
     /**
         Adds a subtree as the last child of the root.
     */
     public void addSubtree(Tree subtree)
     {
-        
+        this.root.children.add(subtree.root);
     }
+
 
     /**
         Computes the size of this tree.
@@ -44,8 +57,9 @@ public class Tree
     */
     public int size() 
     {
-        return 0;
+        return this.root.size();
     }
+
 
     // Additional methods will be added in later sections.
 }
