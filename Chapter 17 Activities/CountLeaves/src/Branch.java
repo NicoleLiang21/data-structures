@@ -1,10 +1,11 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.*;
 
 /**
     A tree in which each node has an arbitrary number of children.
 */
-public class Tree
+public class Branch
 {
     
     private Node root;
@@ -34,7 +35,7 @@ public class Tree
         Constructs a tree with one node and no children.
         @param rootData the data for the root
     */
-    public Tree(Object rootData)
+    public Branch(Object rootData)
     {
         this.root = new Node();
         this.root.data = rootData;
@@ -61,5 +62,33 @@ public class Tree
     }
 
 
-    // Additional methods will be added in later sections.
+    /**
+     * Count the number of leaves in the tree
+     * @return the number of leaves in the class
+     */
+    public int leafCount()
+    {
+        Stack<Node> nodes = new Stack<Node>();
+        Node hold;
+        int sum = 0;
+
+        for (Node node : this.root.children)
+            nodes.push(node);
+        
+        while (nodes.size() != 0)
+        {
+            hold = nodes.pop();
+            
+            if (hold.children.size() == 0)
+                sum++;
+            else
+            {
+                for (int i = 0; i < hold.children.size(); i++)
+                    nodes.push(hold.children.get(i));
+            }
+        }
+
+        return sum;
+    }
+
 }
