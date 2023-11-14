@@ -1,21 +1,24 @@
 //HIDE
+
+import java.util.Stack;
+
 /**
     A binary tree in which each node has two children.
 */
-public class BinaryTree
+public class OneChild
 {
     private Node root;
 
     /**
         Constructs an empty tree.
     */
-    public BinaryTree() { root = null; }
+    public OneChild() { root = null; }
 
     /**
         Constructs a tree with one node and no children.
         @param rootData the data for the root
     */
-    public BinaryTree(Object rootData)
+    public OneChild(Object rootData)
     {
         root = new Node();
         root.data = rootData;
@@ -29,7 +32,7 @@ public class BinaryTree
         @param left the left subtree
         @param right the right subtree
     */
-    public BinaryTree(Object rootData, BinaryTree left, BinaryTree right)
+    public OneChild(Object rootData, BinaryTree left, BinaryTree right)
     {
         root = new Node();
         root.data = rootData;
@@ -102,4 +105,39 @@ public class BinaryTree
         result.root = root.right;
         return result;
     }
+
+    /**
+     * Count the nodes with one child
+     * @return the number of nodes with one child
+     */
+    public int countNodesWithOneChild()
+    {
+        Stack<Node> nodes = new Stack<Node>();
+        Node hold;
+        int sum = 0;
+
+        // start at the root
+        if (root.left != null)
+            nodes.push(root.left);
+        if (root.right != null)
+            nodes.push(root.right);
+        
+        while (nodes.size() != 0)
+        {
+            hold = nodes.pop();
+            
+            if (hold.left == null && hold.right == null)
+                sum++;
+            else
+            {
+                if (root.left != null)
+                    nodes.push(root.left);
+                if (root.right != null)
+                    nodes.push(root.right);
+            }
+        }
+
+        return sum;
+    }
+
 }

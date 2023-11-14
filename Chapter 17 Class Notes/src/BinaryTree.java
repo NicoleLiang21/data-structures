@@ -34,7 +34,7 @@ public class BinaryTree
         @param left the left subtree
         @param right the right subtree
     */
-    public BinaryTree(Object rootData, BinaryTree left, BinaryTree right)
+    public BinaryTree(Object rootData, OneChild left, OneChild right)
     {
         this(rootData);
         this.root.left = left.root;
@@ -52,7 +52,7 @@ public class BinaryTree
         if (n == null)
             return 0;
         else
-            return 1 + Math.max(BinaryTree.height(n.left), BinaryTree.height(n.right));
+            return 1 + Math.max(OneChild.height(n.left), OneChild.height(n.right));
     }
 
     /**
@@ -61,7 +61,7 @@ public class BinaryTree
     */
     public int height()
     {
-        return BinaryTree.height(this.root);
+        return OneChild.height(this.root);
     }
 
     /**
@@ -86,9 +86,9 @@ public class BinaryTree
         Gets the left subtree of this tree.
         @return the left child of the root
     */
-    public BinaryTree left() 
+    public OneChild left() 
     { 
-        BinaryTree subtree = new BinaryTree();
+        OneChild subtree = new OneChild();
         subtree.root = this.root.left;
         return subtree;
     }
@@ -97,9 +97,9 @@ public class BinaryTree
         Gets the right subtree of this tree.
         @return the right child of the root
     */
-    public BinaryTree right() 
+    public OneChild right() 
     { 
-        BinaryTree subtree = new BinaryTree();
+        OneChild subtree = new OneChild();
         subtree.root = this.root.right;
         return subtree;
     }

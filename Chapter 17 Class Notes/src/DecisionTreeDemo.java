@@ -8,24 +8,24 @@ public class DecisionTreeDemo
 {
    public static void main(String[] args)
    {
-      BinaryTree questionTree = new BinaryTree("Is it a mammal?",
-         new BinaryTree("Does it have stripes?",
-            new BinaryTree("Is it a carnivore?",
-               new BinaryTree("It is a tiger."),
-               new BinaryTree("It is a zebra.")),
-            new BinaryTree("It is a pig.")),
-         new BinaryTree("Does it fly?",
-            new BinaryTree("It is an eagle."),
-            new BinaryTree("Does it swim?",
-               new BinaryTree("It is a penguin."),
-               new BinaryTree("It is an ostrich."))));
+      OneChild questionTree = new OneChild("Is it a mammal?",
+         new OneChild("Does it have stripes?",
+            new OneChild("Is it a carnivore?",
+               new OneChild("It is a tiger."),
+               new OneChild("It is a zebra.")),
+            new OneChild("It is a pig.")),
+         new OneChild("Does it fly?",
+            new OneChild("It is an eagle."),
+            new OneChild("Does it swim?",
+               new OneChild("It is a penguin."),
+               new OneChild("It is an ostrich."))));
 
       boolean done = false;
       Scanner in = new Scanner(System.in);
       while (!done)
       {
-         BinaryTree left = questionTree.left();
-         BinaryTree right = questionTree.right();
+         OneChild left = questionTree.left();
+         OneChild right = questionTree.right();
          if (left.isEmpty() && right.isEmpty())
          {
             System.out.println(questionTree.data());
