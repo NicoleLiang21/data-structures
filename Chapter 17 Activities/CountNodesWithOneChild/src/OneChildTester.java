@@ -1,7 +1,7 @@
 /**
   This class demonstrates the tree class.
 */
-public class OneChildDemo
+public class OneChildTester
 {
   public static void main(String[] args)
   {

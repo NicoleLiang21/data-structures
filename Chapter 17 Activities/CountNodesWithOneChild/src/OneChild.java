@@ -1,5 +1,4 @@
-//HIDE
-
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -32,7 +31,7 @@ public class OneChild
         @param left the left subtree
         @param right the right subtree
     */
-    public OneChild(Object rootData, BinaryTree left, BinaryTree right)
+    public OneChild(Object rootData, OneChild left, OneChild right)
     {
         root = new Node();
         root.data = rootData;
@@ -88,9 +87,9 @@ public class OneChild
         Gets the left subtree of this tree.
         @return the left child of the root
     */
-    public BinaryTree left()
+    public OneChild left()
     {
-        BinaryTree result = new BinaryTree();
+        OneChild result = new OneChild();
         result.root = root.left;
         return result;
     }
@@ -99,9 +98,9 @@ public class OneChild
         Gets the right subtree of this tree.
         @return the right child of the root
     */
-    public BinaryTree right()
+    public OneChild right()
     {
-        BinaryTree result = new BinaryTree();
+        OneChild result = new OneChild();
         result.root = root.right;
         return result;
     }
@@ -113,6 +112,7 @@ public class OneChild
     public int countNodesWithOneChild()
     {
         Stack<Node> nodes = new Stack<Node>();
+        ArrayList<Node> visited = new ArrayList<Node>();
         Node hold;
         int sum = 0;
 
@@ -125,14 +125,15 @@ public class OneChild
         while (nodes.size() != 0)
         {
             hold = nodes.pop();
+            visited.add(hold);
             
             if (hold.left == null && hold.right == null)
                 sum++;
             else
             {
-                if (root.left != null)
+                if (root.left != null && !visited.contains(root.left))
                     nodes.push(root.left);
-                if (root.right != null)
+                if (root.right != null && !visited.contains(root.right))
                     nodes.push(root.right);
             }
         }
