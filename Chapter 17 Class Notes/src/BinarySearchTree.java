@@ -12,7 +12,7 @@ public class BinarySearchTree
     */
     public BinarySearchTree()
     {   
-        
+        this.root = null;
     }
     
     /**
@@ -21,7 +21,15 @@ public class BinarySearchTree
     */
     public void add(Comparable obj) 
     {   
-        
+        Node newNode = new Node();
+        newNode.data = obj;
+        newNode.left = null;
+        newNode.right = null;
+
+        if (this.root == null)
+            this.root = newNode;
+        else   
+            this.root.addNode(newNode);
     }
 
     /**
@@ -31,6 +39,20 @@ public class BinarySearchTree
     */
     public boolean find(Comparable obj)
     {
+        Node current = this.root;
+
+        while (current != null)
+        {
+            int diff = obj.compareTo(current.data);
+
+            if (diff == 0)
+                return true;
+            else if (diff < 0)
+                current = current.left;
+            else
+                current = current.right;
+        }
+
         return false;
     }
     
@@ -41,7 +63,49 @@ public class BinarySearchTree
     */
     public void remove(Comparable obj)
     {
-        
+        Node toBeRemoved = this.root;
+        Node parent = null;
+        boolean found = false;
+
+        while (!found && toBeRemoved != null)
+        {
+            int diff = obj.compareTo(toBeRemoved.data);
+            
+            if (diff == 0)
+                found = true;
+            else
+            {
+                parent = toBeRemoved;
+
+                if (diff < 0)
+                    toBeRemoved = toBeRemoved.left;
+                else   
+                    toBeRemoved = toBeRemoved.right;
+            }
+
+            if (!found)
+                return;
+            
+            // At least 1 child is null
+            if (toBeRemoved.left == null || toBeRemoved.right == null)
+            {
+                Node newChild;
+
+                if (toBeRemoved.left == null)
+                    newChild = toBeRemoved.right;
+                else
+                    newChild = toBeRemoved.left;
+                
+                if (parent == null)
+                    this.root = newChild;
+                else if (parent.left == toBeRemoved)
+                    parent.left = newChild;
+                else
+                    parent.right = newChild;
+
+            }
+        }
+
     }
     
     /**
@@ -67,7 +131,9 @@ public class BinarySearchTree
     */
     static class Node
     {   
-        
+        // Must be made up of Comparable Objects
+        public Comparable data;
+        public Node left, right;
 
         /**
             Inserts a new node as a descendant of this node.
@@ -75,7 +141,24 @@ public class BinarySearchTree
         */
         public void addNode(Node newNode)
         {   
-            
+            // If diff < 0, newNode is to the left of this node
+            // If diff > 0, newNode is to the right of this node
+            int diff = newNode.data.compareTo(data);
+
+            if (diff < 0)
+            {
+                if (left == null)
+                    left = newNode;
+                else
+                    left.addNode(newNode);
+            }
+            if (diff > 0)
+            {
+                if (right == null)
+                    right = newNode;
+                else
+                    right.addNode(newNode);
+            }
         }
     }
 }
