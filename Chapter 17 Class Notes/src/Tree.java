@@ -45,7 +45,7 @@ public class Tree
     /**
         Adds a subtree as the last child of the root.
     */
-    public void addSubtree(Branch subtree)
+    public void addSubtree(Tree subtree)
     {
         this.root.children.add(subtree.root);
     }

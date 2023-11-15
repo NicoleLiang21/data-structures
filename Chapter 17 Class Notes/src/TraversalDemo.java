@@ -7,12 +7,12 @@ public class TraversalDemo
 {
     public static void main(String[] args)
     {
-        Branch t1 = new Branch("Anne");
-        Branch t2 = new Branch("Peter");
+        Tree t1 = new Tree("Anne");
+        Tree t2 = new Tree("Peter");
         t1.addSubtree(t2);
-        Branch t3 = new Branch("Zara");
+        Tree t3 = new Tree("Zara");
         t1.addSubtree(t3);
-        Branch t4 = new Branch("Savannah");
+        Tree t4 = new Tree("Savannah");
         t2.addSubtree(t4);
 
         // Count short names with visitor
