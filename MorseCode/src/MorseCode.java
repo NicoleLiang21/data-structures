@@ -71,9 +71,11 @@ public class MorseCode
      */
     private static void addSymbol(char letter, String code)
     {
-        /*
-            !!! INSERT CODE HERE
-        */
+        // set up the map
+        codeMap.put(letter, code);
+
+        // set up the tree
+        decodeTree.treeInsert(letter, code);
     }
 
     /**
@@ -85,9 +87,30 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
+        TreeNode current = 
+
+        while (code.length() != 0)
+        {
+            if (code.charAt(0) == DOT)
+
+        }
+
         /*
-            !!! INSERT CODE HERE
-        */
+        if the code's length is 1 "", its data is this code
+        if the node does not exist (the dot or line that corresponds to left/right is null)
+            take the substring (cut first symbol out)
+            recursive call treeInsert(letter, substring)
+         */
+
+        // base case - we have arrived at the appropriate node
+        /* 
+        if (code.length() == 1)
+        {
+            if (code.chartAt(0) == DOT)
+
+            else
+        }*/
+            
     }
 
     /**
