@@ -1,7 +1,7 @@
-import java.util.TreeMap;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class MorseCode
 {
@@ -75,7 +75,7 @@ public class MorseCode
         codeMap.put(letter, code);
 
         // set up the tree
-        decodeTree.treeInsert(letter, code);
+        treeInsert(letter, code);
     }
 
     /**
@@ -87,30 +87,28 @@ public class MorseCode
      */
     private static void treeInsert(char letter, String code)
     {
-        TreeNode current = 
+        TreeNode current = decodeTree;
 
+        // Follow the path until the code is finished
         while (code.length() != 0)
         {
             if (code.charAt(0) == DOT)
-
+            {
+                if (current.getLeft() == null)
+                    current.setLeft(new TreeNode(' '));
+                current = current.getLeft();
+            }
+            else
+            {
+                if (current.getRight() == null)
+                    current.setRight(new TreeNode(' '));
+                current = current.getRight();
+            }
+            
+            code = code.substring(0, code.length()-1);
         }
 
-        /*
-        if the code's length is 1 "", its data is this code
-        if the node does not exist (the dot or line that corresponds to left/right is null)
-            take the substring (cut first symbol out)
-            recursive call treeInsert(letter, substring)
-         */
-
-        // base case - we have arrived at the appropriate node
-        /* 
-        if (code.length() == 1)
-        {
-            if (code.chartAt(0) == DOT)
-
-            else
-        }*/
-            
+        current.setValue(letter);
     }
 
     /**
@@ -123,10 +121,16 @@ public class MorseCode
     {
         StringBuffer morse = new StringBuffer(400);
 
-        /*
-            !!! INSERT CODE HERE
-        */
+        while (text.length() != 0)
+        {
+            if (text.charAt(0) == ' ')
+                morse.append(' ');
+            else
+                morse.append(codeMap.get(text.charAt(0)));
 
+            morse.append(' ');
+            text = text.substring(1);
+        }
         return morse.toString();
     }
 
@@ -140,9 +144,7 @@ public class MorseCode
     {
         StringBuffer text = new StringBuffer(100);
 
-        /*
-            !!! INSERT CODE HERE
-        */
+        
 
         return text.toString();
     }
