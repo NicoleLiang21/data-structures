@@ -11,12 +11,14 @@ public class MorseCode
     private static TreeMap<Character, String> codeMap;
     private static TreeNode decodeTree;
 
+
     public static void main(String[] args)
     {
         MorseCode.start();  
         System.out.println(MorseCode.encode("Watson come here"));
         BTreePrinter.printNode(decodeTree);
     }
+
 
     public static void start()
     {
@@ -65,6 +67,7 @@ public class MorseCode
         addSymbol('?', "..--..");
     }
 
+
     /**
      * Inserts a letter and its Morse code string into the encoding map
      * and calls treeInsert to insert them into the decoding tree.
@@ -77,6 +80,7 @@ public class MorseCode
         // set up the tree
         treeInsert(letter, code);
     }
+
 
     /**
      * Inserts a letter and its Morse code string into the
@@ -111,6 +115,7 @@ public class MorseCode
         current.setValue(letter);
     }
 
+
     /**
      * Converts text into a Morse code message.  Adds a space after a dot-dash
      * sequence for each letter.  Other spaces in the text are transferred directly
@@ -120,6 +125,7 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
+        text = text.toUpperCase();
 
         while (text.length() != 0)
         {
@@ -134,6 +140,7 @@ public class MorseCode
         return morse.toString();
     }
 
+
     /**
      * Converts a Morse code message into a text string.  Assumes that dot-dash
      * sequences for each letter are separated by one space.  Additional spaces are
@@ -144,11 +151,32 @@ public class MorseCode
     {
         StringBuffer text = new StringBuffer(100);
 
-        
+        while (morse.length() != 0)
+        {
+            TreeNode current = decodeTree;
+            String work = "";
+
+            while (morse.charAt(0) != ' ')
+            {
+                work += morse.charAt(0);
+                morse = morse.substring(1);
+            }
+
+            while (work.length() != 0)
+            {
+                if (work.charAt(0) == DOT)
+                    current = current.getLeft();
+                else
+                    current = current.getRight();
+            }
+            text.append(current.getValue());
+            text.append(" ");
+        }
 
         return text.toString();
     }
 }
+
 
 /**
  * BTreePrinter class courtesy of Karen Ge (@karenge1)
@@ -238,5 +266,6 @@ class BTreePrinter {
 
         return true;
     }
-}
 
+
+}
