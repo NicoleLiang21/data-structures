@@ -108,7 +108,6 @@ public class MorseCode
                     current.setRight(new TreeNode(' '));
                 current = current.getRight();
             }
-            
             code = code.substring(1);
         }
 
@@ -125,7 +124,7 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
-text = text.toUpperCase();
+        text = text.toUpperCase();
 
         while (text.length() != 0)
         {
@@ -166,7 +165,7 @@ text = text.toUpperCase();
             {
                 if (work.charAt(0) == DOT)
                     current = current.getLeft();
-                else
+                else if (work.charAt(0) == DASH)
                     current = current.getRight();
             }
             text.append(current.getValue());
