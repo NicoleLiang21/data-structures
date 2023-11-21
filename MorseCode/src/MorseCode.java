@@ -102,14 +102,14 @@ public class MorseCode
                     current.setLeft(new TreeNode(' '));
                 current = current.getLeft();
             }
-            else
+            else if (code.charAt(0) == DASH)
             {
                 if (current.getRight() == null)
                     current.setRight(new TreeNode(' '));
                 current = current.getRight();
             }
             
-            code = code.substring(0, code.length()-1);
+            code = code.substring(1);
         }
 
         current.setValue(letter);
@@ -125,7 +125,7 @@ public class MorseCode
     public static String encode(String text)
     {
         StringBuffer morse = new StringBuffer(400);
-        text = text.toUpperCase();
+text = text.toUpperCase();
 
         while (text.length() != 0)
         {
@@ -266,6 +266,5 @@ class BTreePrinter {
 
         return true;
     }
-
-
 }
+
