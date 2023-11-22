@@ -149,29 +149,33 @@ public class MorseCode
     public static String decode(String morse)
     {
         StringBuffer text = new StringBuffer(100);
+        TreeNode current;
+        int count = 0, subcount;
 
-        while (morse.length() != 0)
+        while (count < morse.length() - 1)
         {
-            TreeNode current = decodeTree;
-            String work = "";
+            current = decodeTree;
+            subcount = 1;
 
-            while (morse.charAt(0) != ' ')
+            if (morse.charAt(count) == ' ')
+                text.append(" ");
+            else
             {
-                work += morse.charAt(0);
-                morse = morse.substring(1);
+                subcount = count;
+                while (morse.charAt(subcount) != ' ')
+                {
+                    if (morse.charAt(subcount) == DOT)
+                        current = current.getLeft();
+                    else if (morse.charAt(subcount) == DASH)
+                        current = current.getRight();
+                    
+                    subcount++;
+                }
+                text.append(current.getValue());
+                subcount -= count;
             }
-
-            while (work.length() != 0)
-            {
-                if (work.charAt(0) == DOT)
-                    current = current.getLeft();
-                else if (work.charAt(0) == DASH)
-                    current = current.getRight();
-            }
-            text.append(current.getValue());
-            text.append(" ");
+            count += subcount;
         }
-
         return text.toString();
     }
 }
